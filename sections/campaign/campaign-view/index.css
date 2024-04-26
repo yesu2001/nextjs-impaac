@@ -1,0 +1,97 @@
+.video-responsive {
+  position: relative;
+  height: 500px;
+  /* padding-top: 36.25%; */
+  /* 720 / 1280 = 0.5625 */
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* width: 100px;
+    height: auto; */
+}
+
+.donatenow-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  left: auto;
+  right: 0px;
+  width: 100%;
+  z-index: 1100;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  flex-direction: column;
+  cursor: pointer;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: none;
+  background-color: 'white';
+}
+
+.donateBtn {
+  height: 60px;
+  margin: 15px;
+  padding: 15px 0;
+  font-size: 25px;
+}
+
+.PopupdonateBtn {
+  background: #385f96;
+  height: 60px;
+  margin: 15px 20px;
+  padding: 15px 0;
+  font-size: 25px;
+}
+
+.PopupdonateBtn:hover {
+  color: white;
+  background: #385f96;
+}
+
+/* @media screen and (min-width: 480px) {
+  .video-responsive {
+    padding-top: 10%;
+  }
+} */
+
+/*
+.video-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 40%;
+}
+
+.video-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+} */
+
+/* 
+
+
+
+.player-wrapper {
+    width: auto; 
+    height: auto;
+}
+
+.react-player {
+    padding-top: 56.25%; 
+    position: relative;
+}
+
+.react-player>div {
+    position: absolute; 
+} */

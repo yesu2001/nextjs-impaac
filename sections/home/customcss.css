@@ -1,0 +1,18 @@
+.css-365zt3-MuiButtonBase-root-MuiTab-root:not(:last-of-type) {
+  margin-right: 0;
+}
+
+.video-responsive {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.video-responsive .iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}

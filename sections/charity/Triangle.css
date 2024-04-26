@@ -1,0 +1,9 @@
+
+.triangle {
+    width: 0;
+  height: 0;
+  border-left: 100px solid transparent; /* Adjust the size by changing the border width */
+  border-right: 100px solid transparent; /* Adjust the size by changing the border width */
+  border-bottom: 200px solid skyblue; /* Change the color and height as needed */
+  margin: 0 auto; /* Center the triangle horizontally */
+  }

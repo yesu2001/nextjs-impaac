@@ -1,0 +1,10 @@
+export { default as ProfileAbout } from './ProfileAbout';
+export { default as ProfileCampaigns } from './ProfileCampaigns';
+export { default as ProfileCertificates } from './ProfileCertificates';
+export { default as ProfileCover } from './ProfileCover';
+export { default as ProfileCreatePost } from './ProfileCreatePost';
+export { default as ProfileFollowInfo } from './ProfileFollowInfo';
+export { default as ProfilePosts } from './ProfilePosts';
+export { default as ProfileSocialInfo } from './ProfileSocialInfo';
+export { default as ProfileNgoProgress } from './ProfileNgoProgress';
+export { default as ProfileUserProgress } from './ProfileUserProgress';
