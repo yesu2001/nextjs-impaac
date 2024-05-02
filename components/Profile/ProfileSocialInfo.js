@@ -1,16 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // @mui
-import { styled } from '@mui/material/styles';
-import EditIcon from '@mui/icons-material/Edit';
-import { Card, CardHeader, Stack, IconButton, Modal, Box, Button, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { styled } from "@mui/material/styles";
+import EditIcon from "@mui/icons-material/Edit";
+import {
+  Card,
+  CardHeader,
+  Stack,
+  IconButton,
+  Modal,
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
 // components
-import Iconify from '../Iconify';
-import { FormProvider, RHFTextField } from '../hook-form';
-import useAuth from '../../hooks/useAuth';
-import NgoEditPopup from '../../sections/@dashboard/ngo/create/NgoEditModel';
-import UserEditModel from '../../sections/@dashboard/user/create/UserEditModel';
+import Iconify from "../Iconify";
+import { FormProvider, RHFTextField } from "../hook-form";
+import useAuth from "../../hooks/useAuth";
+import NgoEditPopup from "../../sections/@dashboard/ngo/create/NgoEditModel";
+import UserEditModel from "../../sections/@dashboard/user/create/UserEditModel";
 
 // ----------------------------------------------------------------------
 
@@ -29,13 +38,13 @@ ProfileSocialInfo.propTypes = {
 };
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  borderRadius: '10px',
+  bgcolor: "background.paper",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
@@ -46,27 +55,27 @@ export default function ProfileSocialInfo({ profile, ngo }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const socialLinks = profile?.social_media || profile?.social_links;
-  const isNgo = user?.userType?.ngo;
+  const isNgo = profile?.user_role?.ngo;
 
   const SOCIALS = [
     {
-      name: 'Linkedin',
-      icon: <IconStyle icon={'eva:linkedin-fill'} color="#006097" />,
+      name: "Linkedin",
+      icon: <IconStyle icon={"eva:linkedin-fill"} color="#006097" />,
       href: socialLinks?.linkedin,
     },
     {
-      name: 'Twitter',
-      icon: <IconStyle icon={'eva:twitter-fill'} color="#1C9CEA" />,
+      name: "Twitter",
+      icon: <IconStyle icon={"eva:twitter-fill"} color="#1C9CEA" />,
       href: socialLinks?.twitter,
     },
     {
-      name: 'Instagram',
-      icon: <IconStyle icon={'ant-design:instagram-filled'} color="#D7336D" />,
+      name: "Instagram",
+      icon: <IconStyle icon={"ant-design:instagram-filled"} color="#D7336D" />,
       href: socialLinks?.instagram,
     },
     {
-      name: 'Facebook',
-      icon: <IconStyle icon={'eva:facebook-fill'} color="#1877F2" />,
+      name: "Facebook",
+      icon: <IconStyle icon={"eva:facebook-fill"} color="#1877F2" />,
       href: socialLinks?.facebook,
     },
   ];
@@ -86,7 +95,11 @@ export default function ProfileSocialInfo({ profile, ngo }) {
           <Stack key={link.name} direction="row" alignItems="center">
             {link.icon}
             {link.href ? (
-              <a href={link.href} rel="noopener" style={{ color: 'black', textDecoration: 'none' }}>
+              <a
+                href={link.href}
+                rel="noopener"
+                style={{ color: "black", textDecoration: "none" }}
+              >
                 {link.href}
               </a>
             ) : (
@@ -98,7 +111,12 @@ export default function ProfileSocialInfo({ profile, ngo }) {
         ))}
       </Stack>
       {isNgo ? (
-        <NgoEditPopup open={open} handleClose={handleClose} ngo={ngo} profile={profile}>
+        <NgoEditPopup
+          open={open}
+          handleClose={handleClose}
+          ngo={ngo}
+          profile={profile}
+        >
           <Stack spacing={2} my={2}>
             <RHFTextField name="linkedin" label="Linkedin Link" />
             <RHFTextField name="facebook" label="Facebook Link" />

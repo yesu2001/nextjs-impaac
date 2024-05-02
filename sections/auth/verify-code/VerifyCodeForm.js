@@ -1,20 +1,26 @@
-import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
-import * as Yup from 'yup';
+import { useSnackbar } from "notistack";
+import { useEffect } from "react";
+import * as Yup from "yup";
 // firebase
-import { getAuth, updateEmail, updatePassword, updateProfile } from 'firebase/auth';
+import {
+  getAuth,
+  updateEmail,
+  updatePassword,
+  updateProfile,
+} from "firebase/auth";
 
 // form
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Controller, useForm } from "react-hook-form";
 // @mui
-import { LoadingButton } from '@mui/lab';
-import { FormHelperText, OutlinedInput, Stack } from '@mui/material';
+import { LoadingButton } from "@mui/lab";
+import { FormHelperText, OutlinedInput, Stack } from "@mui/material";
 // routes
 // components
-import { FormProvider, RHFTextField } from '../../../components/hook-form';
-import { signup } from '../../../helper/auth';
-import useAuth from '../../../hooks/useAuth';
+import { FormProvider, RHFTextField } from "../../../components/hook-form";
+import { signup } from "../../../helper/auth";
+import useAuth from "../../../hooks/useAuth";
+import { signIn } from "next-auth/react";
 
 // ----------------------------------------------------------------------
 
@@ -24,50 +30,26 @@ export default function VerifyCodeForm({ user }) {
   const { enqueueSnackbar } = useSnackbar();
   const { refreshUser } = useAuth();
 
-  // useEffect(() => {
-  //   if (open) {
-  //     navigator.credentials
-  //       .get({
-  //         otp: { transport: ['sms'] },
-  //         signal: new AbortController().signal,
-  //       })
-  //       .then((otpCredential) => {
-  //         const otp = otpCredential.code;
-  //         // Automatically fill in the OTP field with the retrieved OTP
-  //         // (You need to add code to fill in the OTP field here)
-  //         const otpDigits = otp.split('');
-  //         for (let i = 0; i < otpDigits.length; i++) {
-  //           setValue(`code${i + 1}`, otpDigits[i]);
-  //         }
-  //         // After filling in the OTP, you can submit it for verification using handleOtpVerification function
-  //         //   handleOtpVerification(otp);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error retrieving OTP:', error);
-  //       });
-  //   }
-  // }, [open]);
-
   const VerifyCodeSchema = Yup.object().shape({
-    code1: Yup.string().required('Code is required'),
-    code2: Yup.string().required('Code is required'),
-    code3: Yup.string().required('Code is required'),
-    code4: Yup.string().required('Code is required'),
-    code5: Yup.string().required('Code is required'),
-    code6: Yup.string().required('Code is required'),
+    code1: Yup.string().required("Code is required"),
+    code2: Yup.string().required("Code is required"),
+    code3: Yup.string().required("Code is required"),
+    code4: Yup.string().required("Code is required"),
+    code5: Yup.string().required("Code is required"),
+    code6: Yup.string().required("Code is required"),
   });
 
   const defaultValues = {
-    code1: '',
-    code2: '',
-    code3: '',
-    code4: '',
-    code5: '',
-    code6: '',
+    code1: "",
+    code2: "",
+    code3: "",
+    code4: "",
+    code5: "",
+    code6: "",
   };
 
   const methods = useForm({
-    mode: 'all',
+    mode: "all",
     resolver: yupResolver(VerifyCodeSchema),
     defaultValues,
   });
@@ -83,21 +65,21 @@ export default function VerifyCodeForm({ user }) {
   const values = watch();
 
   useEffect(() => {
-    const target = document.querySelector('input.field-code');
+    const target = document.querySelector("input.field-code");
 
-    target?.addEventListener('paste', handlePaste);
+    target?.addEventListener("paste", handlePaste);
 
     return () => {
-      target?.removeEventListener('paste', handlePaste);
+      target?.removeEventListener("paste", handlePaste);
     };
   }, []);
 
   const handlePaste = (event) => {
-    let data = event.clipboardData.getData('text');
+    let data = event.clipboardData.getData("text");
 
-    data = data.split('');
+    data = data.split("");
 
-    [].forEach.call(document.querySelectorAll('.field-code'), (node, index) => {
+    [].forEach.call(document.querySelectorAll(".field-code"), (node, index) => {
       node.value = data[index];
 
       const fieldIndex = `code${index + 1}`;
@@ -111,7 +93,7 @@ export default function VerifyCodeForm({ user }) {
   const handleChangeWithNextField = (event, handleChange) => {
     const { maxLength, value, name } = event.target;
 
-    const fieldIndex = name.replace('code', '');
+    const fieldIndex = name.replace("code", "");
 
     const fieldIntIndex = Number(fieldIndex);
 
@@ -131,17 +113,21 @@ export default function VerifyCodeForm({ user }) {
   const inputfocus = (elmnt, handleChange) => {
     const { maxLength, value, name } = elmnt.target;
 
-    const fieldIndex = name.replace('code', '');
+    const fieldIndex = name.replace("code", "");
 
     const fieldIntIndex = Number(fieldIndex);
-    if (elmnt.key === 'Delete' || elmnt.key === 'Backspace') {
-      const nextfield = document.querySelector(`input[name=code${fieldIntIndex - 1}]`);
+    if (elmnt.key === "Delete" || elmnt.key === "Backspace") {
+      const nextfield = document.querySelector(
+        `input[name=code${fieldIntIndex - 1}]`
+      );
 
       if (nextfield !== null) {
         nextfield.focus();
       }
     } else {
-      const nextfield = document.querySelector(`input[name=code${fieldIntIndex + 1}]`);
+      const nextfield = document.querySelector(
+        `input[name=code${fieldIntIndex + 1}]`
+      );
       if (nextfield !== null) {
         nextfield.focus();
       }
@@ -151,15 +137,15 @@ export default function VerifyCodeForm({ user }) {
 
   const onSubmit = async (data) => {
     try {
-      const otp = Object.values(data).join('');
+      const otp = Object.values(data).join("");
       const { fullName, email, password, category } = user;
-      const { confirmationResult } = window;
-      const userRole = category === 'organisation';
+      const confirmationResult = await window.confirmationResult;
+      const userRole = category === "organisation";
 
       await confirmationResult
         .confirm(otp)
         .then(async (result) => {
-          localStorage.setItem('isNewUser', result?._tokenResponse?.isNewUser);
+          localStorage.setItem("isNewUser", result?._tokenResponse?.isNewUser);
 
           if (!result.user.email) {
             await updateEmail(auth.currentUser, email);
@@ -174,19 +160,29 @@ export default function VerifyCodeForm({ user }) {
             }).then((data) => {
               if (data.error) {
                 enqueueSnackbar(data.error, {
-                  variant: 'error',
+                  variant: "error",
                 });
               }
               refreshUser(result.user.uid, result.user.accessToken);
             });
           }
+          signIn("credentials", {
+            data: JSON.stringify({
+              accessToken: auth.currentUser.accessToken,
+              ...result.user,
+            }),
+            callbackUrl: `http://localhost:3000/home`,
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = errorCode === 'auth/invalid-verification-code' ? 'Invalid Code or OTP' : error.message;
+          const errorMessage =
+            errorCode === "auth/invalid-verification-code"
+              ? "Invalid Code or OTP"
+              : error.message;
           console.log(errorMessage);
           enqueueSnackbar(errorMessage, {
-            variant: 'error',
+            variant: "error",
           });
         });
     } catch (error) {
@@ -212,14 +208,16 @@ export default function VerifyCodeForm({ user }) {
                   autoFocus={index === 0}
                   placeholder="-"
                   onKeyUp={(e) => inputfocus(e, field.onChange)}
-                  onChange={(event) => handleChangeWithNextField(event, field.onChange)}
+                  onChange={(event) =>
+                    handleChangeWithNextField(event, field.onChange)
+                  }
                   inputProps={{
-                    className: 'field-code',
-                    inputMode: 'numeric',
+                    className: "field-code",
+                    inputMode: "numeric",
                     maxLength: 1,
                     sx: {
                       p: 0,
-                      textAlign: 'center',
+                      textAlign: "center",
                       width: { xs: 36, sm: 56 },
                       height: { xs: 36, sm: 56 },
                     },
@@ -230,13 +228,25 @@ export default function VerifyCodeForm({ user }) {
           ))}
         </Stack>
 
-        {(!!errors.code1 || !!errors.code2 || !!errors.code3 || !!errors.code4 || !!errors.code5 || !!errors.code6) && (
+        {(!!errors.code1 ||
+          !!errors.code2 ||
+          !!errors.code3 ||
+          !!errors.code4 ||
+          !!errors.code5 ||
+          !!errors.code6) && (
           <FormHelperText error sx={{ px: 2 }}>
             OTP is required
           </FormHelperText>
         )}
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ mt: 3 }}>
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+          sx={{ mt: 3 }}
+        >
           Verify
         </LoadingButton>
       </Stack>

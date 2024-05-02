@@ -11,28 +11,28 @@ import DonationItem from "@/sections/@dashboard/donation/list/DonationItem";
 import { getUserDonations } from "@/helper/donor";
 import CircularLoader from "@/components/CircularLoader";
 
-export default function DonationList() {
+export default function DonationList({ donations, user }) {
   const { themeStretch } = useSettings();
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
-  const [myDonations, setMyDonations] = useState([]);
+  // const { user } = useAuth();
+  // const [loading, setLoading] = useState(false);
+  // const [myDonations, setMyDonations] = useState([]);
 
-  useEffect(() => {
-    setLoading(true);
-    preload();
-  }, [user]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   preload();
+  // }, [user]);
 
-  const preload = () => {
-    if (!user.id || !user.token) {
-      return;
-    }
-    getUserDonations(user.id, user.token)
-      .then((data) => {
-        setMyDonations(data);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
-  };
+  // const preload = () => {
+  //   if (!user.id || !user.token) {
+  //     return;
+  //   }
+  //   getUserDonations(user.id, user.token)
+  //     .then((data) => {
+  //       setMyDonations(data);
+  //     })
+  //     .catch((err) => console.error(err))
+  //     .finally(() => setLoading(false));
+  // };
 
   return (
     <Container maxWidth={themeStretch ? false : "lg"}>
@@ -43,14 +43,14 @@ export default function DonationList() {
           { name: "Donation", href: "/donations" },
         ]}
       />
-      {loading && <CircularLoader />}
-      {myDonations?.length < 1 && (
+      {/* {loading && <CircularLoader />} */}
+      {donations?.length < 1 && (
         <Typography variant="h4" sx={{ color: "gray", textAlign: "center" }}>
           There no donations of yours.
         </Typography>
       )}
-      {myDonations.length > 0 &&
-        myDonations?.map((donation) => (
+      {donations.length > 0 &&
+        donations?.map((donation) => (
           <div key={donation._id}>
             <DonationItem donation={donation} user={user} />
           </div>

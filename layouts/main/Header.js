@@ -17,11 +17,14 @@ import {
 } from "./menuConfig";
 import AccountPopover from "../dashboard/header/AccountPopover";
 import MenuMobile from "./MenuMobile";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
   const theme = useTheme();
-  const { isAuthenticated } = useAuth();
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === "authenticated";
+  // const { isAuthenticated } = useAuth();
   const { pathname } = usePathname();
   const isDesktop = useResponsive("up", "md");
 

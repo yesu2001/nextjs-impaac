@@ -1,12 +1,13 @@
 "use client";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // @mui
 import { styled } from "@mui/material/styles";
 import { Box, Link, Typography } from "@mui/material";
-// hooks
-import useAuth from "@/hooks/useAuth";
 // components
 import MyAvatar from "@/components/MyAvatar";
+import { getAuserHelper } from "@/helper/user";
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,23 @@ NavbarAccount.propTypes = {
 };
 
 export default function NavbarAccount({ isCollapse }) {
-  const { user, userProfile, ngoProfile } = useAuth();
+  const { data: session } = useSession();
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    preload();
+  }, [session]);
+
+  console.log(session);
+
+  const preload = async () => {
+    const data = await getAuserHelper(
+      session?.user?.uid,
+      session?.user?.accessToken
+    );
+    console.log(data);
+    setUserData(data);
+  };
 
   return (
     <Link underline="none" color="inherit" to={"/dashboard/user/account"}>
@@ -54,11 +71,9 @@ export default function NavbarAccount({ isCollapse }) {
             }),
           }}
         >
-          <Typography variant="subtitle2">
-            {ngoProfile?.name || userProfile?.name}{" "}
-          </Typography>
+          <Typography variant="subtitle2">{userData?.name} </Typography>
           <Typography variant="body2" noWrap sx={{ color: "green" }}>
-            {user?.userType?.ngo ? "Organisation" : "Individual"}
+            {userData?.user_role?.ngo ? "Organisation" : "Individual"}
           </Typography>
         </Box>
       </RootStyle>

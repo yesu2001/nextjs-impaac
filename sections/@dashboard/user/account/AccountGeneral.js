@@ -12,8 +12,8 @@ import { FormProvider, RHFTextField } from "@/components/hook-form";
 
 // ----------------------------------------------------------------------
 
-export default function AccountGeneral() {
-  const { user } = useAuth();
+export default function AccountGeneral({ user }) {
+  // const { user } = useAuth();
 
   const UpdateUserSchema = Yup.object().shape({
     displayName: Yup.string().required("Name is required"),
@@ -21,10 +21,10 @@ export default function AccountGeneral() {
   });
 
   const defaultValues = {
-    displayName: user?.displayName || "",
+    displayName: user?.displayName || user?.name || "",
     email: user?.email || "",
     photoURL: user?.photoURL || "",
-    phoneNumber: user?.phoneNumber || "",
+    phoneNumber: user?.phoneNumber || user.phonenumber || "",
     country: user?.country || "",
     address: user?.address || "",
     state: user?.state || "",

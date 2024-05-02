@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 // @mui
 import EditIcon from "@mui/icons-material/Edit";
@@ -21,21 +22,21 @@ import NgoImageEditModel from "@/sections/@dashboard/ngo/create/NgoImageEditMode
 import RegisterSuccess from "@/sections/auth/register/RegisterSuccess";
 import "../style.css";
 
-export default function NgoProfilePage() {
-  const { user, ngoProfile } = useAuth();
+export default function NgoProfilePage({ ngoProfile, campaigns }) {
+  // const { user, ngoProfile } = useAuth();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [profileCampaigns, setProfileCampaigns] = useState([]);
+  // const [profileCampaigns, setProfileCampaigns] = useState([]);
   const [openMessage, setOpenMessage] = useState(false);
 
   useEffect(() => {
     console.log("NgoProfilePage", ngoProfile);
-    setLoading(true);
-    preload();
+    // setLoading(true);
+    // preload();
     checkIsNewUser();
-  }, [user]);
+  }, [ngoProfile]);
 
   useEffect(() => {
     if (window.screen.width > 500) {
@@ -54,16 +55,16 @@ export default function NgoProfilePage() {
     }
   };
 
-  const preload = async () => {
-    const response = await getAllProfileCampaigns(user?.id, user?.token);
-    if (response.ok) {
-      const data = await response.json();
-      if (data) {
-        setProfileCampaigns(data);
-        setLoading(false);
-      }
-    }
-  };
+  // const preload = async () => {
+  //   const response = await getAllProfileCampaigns(user?.id, user?.token);
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     if (data) {
+  //       setProfileCampaigns(data);
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
   return (
     <Container>
       <ProfileNgoProgress profile={ngoProfile} />
@@ -98,7 +99,7 @@ export default function NgoProfilePage() {
 
         <ProfileCover profile={ngoProfile} />
       </Card>
-      <ProfileSection profile={ngoProfile} campaigns={profileCampaigns} />
+      <ProfileSection profile={ngoProfile} campaigns={campaigns} />
 
       <RegisterSuccess
         open={openMessage}

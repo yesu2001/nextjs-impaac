@@ -9,6 +9,13 @@ import React from "react";
 
 export const metadata = {
   title: "Contact us",
+  images: [
+    {
+      url: "/sections/contact/ContactImages/ContactBanner.jpg",
+      width: 1200,
+      height: 630,
+    },
+  ],
 };
 
 export default function page() {

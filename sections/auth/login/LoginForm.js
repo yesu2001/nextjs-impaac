@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react";
 import { getAuth, signInWithPhoneNumber } from "firebase/auth";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -141,7 +142,12 @@ export default function LoginForm() {
                 variant: "error",
               });
             } else {
-              await login(data.email, newData.password);
+              // await login(data.email, newData.password);
+              signIn("credentials", {
+                email: data.email,
+                password: newData.password,
+                callbackUrl: `${window.location.origin}/dashboard/app`,
+              });
             }
           }
         );
@@ -161,6 +167,7 @@ export default function LoginForm() {
                   appVerifier
                 ).then((confirmationResult) => {
                   window.confirmationResult = confirmationResult;
+                  console.log(confirmationResult);
                   setOpenConfirm(true);
                   setUser(data);
                 });
