@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 // @mui
 import { Card, Container, IconButton } from "@mui/material";
@@ -14,19 +15,18 @@ import UserImageEditModel from "@/sections/@dashboard/user/create/UserImageEditM
 import { UserDefaultValue } from "@/sections/@dashboard/user/create/UserDefaultValue";
 import RegisterSuccess from "@/sections/auth/register/RegisterSuccess";
 // helper
-import { getAllProfileCampaigns } from "@/helper/campaign";
+// import { getAllProfileCampaigns } from "@/helper/campaign";
 
-export default function UserProfile() {
+export default function UserProfile({ userProfile, campaigns }) {
   const { themeStretch } = useSettings();
   const [showProfile, setShowProfile] = useState(true);
-  const isMobile = useResponsive("down", "md");
+  // const isMobile = useResponsive("down", "md");
   const [openMessage, setOpenMessage] = useState(false);
 
-  const { user, userProfile } = useAuth();
-  const kycVerified = user?.kycStatus === "verified";
-  const [profileCampaigns, setProfileCampaigns] = useState([]);
+  // const { user, userProfile } = useAuth();
+  // const kycVerified = user?.kycStatus === "verified";
+  // const [profileCampaigns, setProfileCampaigns] = useState([]);
 
-  console.log(user);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -66,9 +66,9 @@ export default function UserProfile() {
 
   useEffect(() => {
     console.log(userProfile);
-    preload();
+    // preload();
     checkIsNewUser();
-  }, [user]);
+  }, [userProfile]);
 
   const checkIsNewUser = () => {
     const isUserNew = localStorage.getItem("isNewUser");
@@ -79,15 +79,15 @@ export default function UserProfile() {
     }
   };
 
-  const preload = async () => {
-    const response = await getAllProfileCampaigns(user?.id, user?.token);
-    if (response.ok) {
-      const data = await response.json();
-      if (data) {
-        setProfileCampaigns(data);
-      }
-    }
-  };
+  // const preload = async () => {
+  //   const response = await getAllProfileCampaigns(user?.id, user?.token);
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     if (data) {
+  //       setProfileCampaigns(data);
+  //     }
+  //   }
+  // };
   return (
     <Container maxWidth={themeStretch ? false : "lg"}>
       {showProfile && (
@@ -104,10 +104,7 @@ export default function UserProfile() {
           }}
         >
           <div className="cover-image">
-            <img
-              src={user?.cover_image || userProfile?.cover_image}
-              alt="Cover"
-            />
+            <img src={userProfile?.cover_image} alt="Cover" />
           </div>
         </Card>
         <IconButton
@@ -130,7 +127,7 @@ export default function UserProfile() {
         </IconButton>
         <ProfileCover profile={userProfile} />
       </Card>
-      <ProfileSectionUser profile={userProfile} campaigns={profileCampaigns} />
+      <ProfileSectionUser profile={userProfile} campaigns={campaigns} />
       <RegisterSuccess
         open={openMessage}
         onClose={() => setOpenMessage(false)}

@@ -10,26 +10,29 @@ import NotistackProvider from "@/components/NotistackProvider";
 import { ProgressBarStyle } from "./ProgressBar";
 import { ChartStyle } from "./chart";
 import ScrollToTop from "./ScrollToTop";
+import { SessionProvider } from "next-auth/react";
 
 export default function Providers({ children }) {
   return (
-    <AppRouterCacheProvider>
-      <AuthProvider>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <CollapseDrawerProvider>
-            <MotionLazyContainer>
-              <ThemeProvider>
-                <NotistackProvider>
-                  <ProgressBarStyle />
-                  <ChartStyle />
-                  <ScrollToTop />
-                  {children}
-                </NotistackProvider>
-              </ThemeProvider>
-            </MotionLazyContainer>
-          </CollapseDrawerProvider>
-        </LocalizationProvider>
-      </AuthProvider>
-    </AppRouterCacheProvider>
+    <SessionProvider>
+      <AppRouterCacheProvider>
+        <AuthProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <CollapseDrawerProvider>
+              <MotionLazyContainer>
+                <ThemeProvider>
+                  <NotistackProvider>
+                    <ProgressBarStyle />
+                    <ChartStyle />
+                    <ScrollToTop />
+                    {children}
+                  </NotistackProvider>
+                </ThemeProvider>
+              </MotionLazyContainer>
+            </CollapseDrawerProvider>
+          </LocalizationProvider>
+        </AuthProvider>
+      </AppRouterCacheProvider>
+    </SessionProvider>
   );
 }

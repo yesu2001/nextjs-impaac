@@ -10,7 +10,7 @@ import HeaderBreadcrumbs from "@/components/HeaderBreadcrumbs";
 import Iconify from "@/components/Iconify";
 import AccountGeneral from "@/sections/@dashboard/user/account/AccountGeneral";
 
-export default function UserAccount() {
+export default function UserAccount({ user }) {
   const { themeStretch } = useSettings();
 
   const { currentTab, onChangeTab } = useTabs("general");
@@ -19,7 +19,7 @@ export default function UserAccount() {
     {
       value: "general",
       icon: <Iconify icon={"ic:round-account-box"} width={20} height={20} />,
-      component: <AccountGeneral />,
+      component: <AccountGeneral user={user} />,
     },
   ];
 

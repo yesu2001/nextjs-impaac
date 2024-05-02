@@ -52,9 +52,10 @@ const style = {
 };
 
 // ----------------------------------------------------------------
-export default function CampaignList() {
+export default function CampaignList({ campaigns, user, userProfile }) {
   const { themeStretch } = useSettings();
-  const { user, userProfile } = useAuth();
+  // const { user, userProfile } = useAuth();
+  console.log("Camapgins - ", campaigns);
 
   const route = useRouter();
 
@@ -76,24 +77,23 @@ export default function CampaignList() {
   useEffect(() => {
     setLoading(true);
     preload();
-  }, [user]);
+  }, []);
 
   const preload = async () => {
-    if (!user.id || !user.token) {
-      return;
-    }
-    const response = await getAllProfileCampaigns(user?.id, user?.token);
-    if (response.ok) {
-      const data = await response.json();
-      if (data) {
-        setTableData(data);
-        setLoading(false);
-      }
-    }
+    // if (!user.id || !user.token) {
+    //   return;
+    // }
+    // const response = await getAllProfileCampaigns(user?.id, user?.token);
+    // if (response.ok) {
+    //   const data = await response.json();
+    //   if (data) {
+    setTableData(campaigns);
+    setLoading(false);
+    //   }
+    // }
   };
 
   const handleViewRow = (row) => {
-    const { _id, title } = row;
     route.push(`/fundraisers/${paramCase(row.title)}/${row._id}`);
   };
 

@@ -44,9 +44,9 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function WithdrawalList() {
+export default function WithdrawalList({ WithdrawalData, user }) {
   const { themeStretch } = useSettings();
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const route = useRouter();
 
   const {
@@ -75,26 +75,25 @@ export default function WithdrawalList() {
   const { currentTab: filterStatus } = useTabs("all");
 
   useEffect(() => {
-    setLoading(true);
-    preload();
-  }, [user]);
+    setTableData(WithdrawalData);
+  }, []);
 
-  const preload = () => {
-    if (!user.id || !user.token) {
-      return;
-    }
+  // const preload = () => {
+  //   // if (!user.id || !user.token) {
+  //   //   return;
+  //   // }
 
-    getUserWithdrawal(user.id, user.token)
-      .then((data) => {
-        if (data.length) {
-          setTableData(data);
-        } else {
-          setTableData([]);
-        }
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  };
+  //   getUserWithdrawal(user.id, user.token)
+  //     .then((data) => {
+  //       if (data.length) {
+  //         setTableData(data);
+  //       } else {
+  //         setTableData([]);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err))
+  //     .finally(() => setLoading(false));
+  // };
 
   const handleFilterName = (filterName) => {
     setFilterName(filterName);
