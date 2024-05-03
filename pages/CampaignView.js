@@ -61,7 +61,7 @@ export default function CampaignView({ campaign, donorList }) {
     if (campaign?.user?._id === user?.id && user?.id !== undefined) {
       setIsOwnCampaign(true);
     }
-  }, [user?._id, campaign]);
+  }, [user?.id, campaign]);
 
   // Get Campaign Donor List
   //   const preloadList = () => {

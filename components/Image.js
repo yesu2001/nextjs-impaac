@@ -102,4 +102,6 @@ Image.propTypes = {
   ]),
 };
 
+Image.displayName = "Image";
+
 export default Image;

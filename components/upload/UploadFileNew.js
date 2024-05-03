@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { blue, green } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import LinearProgress from "@mui/material/LinearProgress";
-// import Iconify from '../Iconify';
+import Iconify from "../Iconify";
 import { UploadImage } from "./UploadOnCloud";
 
 export default function UploadFileNew({

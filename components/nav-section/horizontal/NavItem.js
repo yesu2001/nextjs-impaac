@@ -30,6 +30,8 @@ ListItem.propTypes = {
   roles: PropTypes.arrayOf(PropTypes.string),
 };
 
+ListItem.displayName = "ListItem";
+
 export const NavItemRoot = forwardRef(
   ({ item, active, open, onMouseEnter, onMouseLeave }, ref) => {
     const { translate } = useLocales();

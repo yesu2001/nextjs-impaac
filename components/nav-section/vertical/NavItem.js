@@ -22,6 +22,8 @@ const ListItem = forwardRef((props, ref) => (
   </RoleBasedGuard>
 ));
 
+ListItem.displayName = "ListItem";
+
 ListItem.propTypes = {
   children: PropTypes.node,
   roles: PropTypes.arrayOf(PropTypes.string),
